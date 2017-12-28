@@ -12,11 +12,15 @@ function validateUrl(arr) {
 
 //schema for portfolios
 var portfolioSchema = new Schema({
-    'title': {type: String, required: true},
+    'title': {type: String, required: true, unique: true},
     'subtitle': {type: String, required: true},
     'productGroups': {type: [String], required: true},
     'solutions': {type: [String], required: true},
     'desc': {type: String, required: true},
+    'isItFeaturedProduct': {type: Boolean, default: false},
+    'imgIfFeaturedProduct': {
+        type: String
+    },
     'images': {
         type: [String],
         required: true,

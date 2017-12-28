@@ -2,7 +2,6 @@ var express = require('express');
 var multer = require('multer');
 var router = express.Router();
 
-
 var storageForImage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'uploads/images');
@@ -78,11 +77,12 @@ router.post('/uploadImage', function (request, response) {
         }
         response.status(200).json({
             data: {
-                urlPath: "images/"
+                urlPath: "localhost:3000/images/" + request.files[0].filename
             }
         });
     });
 });
+
 
 //api to video type
 router.post('/uploadVideo', function (request, response) {
@@ -95,7 +95,7 @@ router.post('/uploadVideo', function (request, response) {
         }
         response.status(200).json({
             data: {
-                urlPath: "videos/"
+                urlPath: "localhost:3000/videos/" + request.files[0].filename
             }
         });
     });
@@ -112,7 +112,7 @@ router.post('/uploadPdf', function (request, response) {
         }
         response.status(200).json({
             data: {
-                urlPath: "pdf/"
+                urlPath: "localhost:3000/pdf/" + request.files[0].filename
             }
         });
     });

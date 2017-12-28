@@ -12,9 +12,15 @@ router.post('/', function (req, res, next) {
             })
         })
         .catch(function (err) {
-            res.status(500).json({
-                error: err.message
-            })
+            if (err.message.indexOf('duplicate key') != -1) {
+                res.status(500).json({
+                    error: err.message
+                })
+            } else {
+                res.status(500).json({
+                    message: err.message
+                })
+            }
         })
 });
 

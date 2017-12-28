@@ -1,37 +1,31 @@
 var express = require('express');
 var router = express.Router();
-var Category = require('../../models/categories');
+var Testimonial = require('../../models/testimonial');
 
-// save categories
+// save testimonial
 router.post('/', function (req, res, next) {
-    var category = new Category(req.body);
-    category.save()
-        .then(function (newCategory) {
+    var testimonial = new Testimonial(req.body);
+    testimonial.save()
+        .then(function (newTestimonial) {
             res.status(201).json({
-                message: "New category created successfully."
+                message: "New testimonial created successfully."
             })
         })
         .catch(function (err) {
-            if (err.message.indexOf('duplicate key') != -1) {
-                res.status(500).json({
-                    error: err.message
-                })
-            } else {
-                res.status(500).json({
-                    message: err.message
-                })
-            }
+            res.status(500).json({
+                message: err.message
+            })
         });
 });
 
 // get all categories
 router.get('/', function (req, res, next) {
-    Category.find({})
+    Testimonial.find({})
         .exec()
-        .then(function (categories) {
+        .then(function (testimonials) {
             res.status(200).json({
-                count: categories.length,
-                data: categories
+                count: testimonials.length,
+                data: testimonials
             })
         }).catch(function (err) {
         res.status(500).json({
@@ -41,17 +35,17 @@ router.get('/', function (req, res, next) {
 });
 
 //get categories by id
-router.get('/:categoryId', function (req, res, next) {
-    Category.findById(req.params.categoryId)
+router.get('/:testimonialId', function (req, res, next) {
+    Testimonial.findById(req.params.testimonialId)
         .exec()
-        .then(function (category) {
-            if (!category) {
+        .then(function (testimonial) {
+            if (!testimonial) {
                 res.status(404).jsonp({
                     "message": "Not found"
                 });
             } else {
                 res.status(200).jsonp({
-                    data: category
+                    data: testimonial
                 });
             }
         })
@@ -63,8 +57,8 @@ router.get('/:categoryId', function (req, res, next) {
 });
 
 //update categories
-router.patch('/:categoryId', function (req, res, next) {
-    Category.findOneAndUpdate({'_id': req.params.categoryId}, {$set: req.body})
+router.patch('/:testimonialId', function (req, res, next) {
+    Testimonial.findOneAndUpdate({'_id': req.params.testimonialId}, {$set: req.body})
         .exec()
         .then(function (response) {
             res.status(201).json({
@@ -80,8 +74,8 @@ router.patch('/:categoryId', function (req, res, next) {
 });
 
 //delete categories
-router.delete('/:categoryId', function (req, res, next) {
-    Category.findByIdAndRemove(req.params.categoryId)
+router.delete('/:testimonialId', function (req, res, next) {
+    Testimonial.findByIdAndRemove(req.params.testimonialId)
         .exec()
         .then(function (response) {
             res.status(200).jsonp({

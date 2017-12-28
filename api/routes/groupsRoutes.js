@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Group = require('../../models/productGroup');
+var multer = require('multer');
 
 // save group
 router.post('/', function (req, res, next) {
@@ -12,9 +13,15 @@ router.post('/', function (req, res, next) {
             })
         })
         .catch(function (err) {
-            res.status(500).json({
-                message: err.message
-            })
+            if (err.message.indexOf('duplicate key') != -1) {
+                res.status(500).json({
+                    error: err.message
+                })
+            } else {
+                res.status(500).json({
+                    message: err.message
+                })
+            }
         });
 });
 

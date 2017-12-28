@@ -3,7 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/testDb', {useMongoClient: true});
+
+mongoose.connect('mongodb://127.0.0.1:27017/vcec', {useMongoClient: true});
 var autoIncrement = require('mongoose-auto-increment');
 var fs = require('fs');
 
@@ -35,6 +36,7 @@ var portfolioRoute = require('./api/routes/portfolioRoutes');
 var groupsRoute = require('./api/routes/groupsRoutes');
 var categoryRoute = require('./api/routes/categoryRoutes');
 var userRoute = require('./api/routes/userRoutes');
+var testimonialRoute = require('./api/routes/testimonialRoutes');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -61,6 +63,7 @@ app.use('/group', groupsRoute);
 app.use('/category', categoryRoute);
 app.use('/portfolio', portfolioRoute);
 app.use('/upload', uploadRoute);
+app.use('/testimonial', testimonialRoute);
 
 
 //to handle user requested path other that defined api path

@@ -5,7 +5,8 @@ var autoIncrement = require('mongoose-auto-increment');
 
 //schema for categories
 var productCategorySchema = new Schema({
-    'category_name': {type: String, required: true},
+    'category_name': {type: String, required: [true, "Category name is required."], unique: true},
+    'img': {type: String, required: [true, 'Image is required.']},
     created_at: Number,
     updated_at: Number
 });
