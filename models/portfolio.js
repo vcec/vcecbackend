@@ -10,16 +10,28 @@ function validateUrl(arr) {
     })
 }
 
+function validateLink(link) {
+    return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[A-Za-z0-9]+([\-\.]{1}[A-Za-z0-9]+)*\.[A-Za-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gi.test(link);
+}
+
 //schema for portfolios
 var portfolioSchema = new Schema({
     'title': {type: String, required: true, unique: true},
     'subtitle': {type: String, required: true},
     'productGroups': {type: [String], required: true},
     'solutions': {type: [String], required: true},
+    'subSolutions': {type: [String]},
     'desc': {type: String, required: true},
     'isItFeaturedProduct': {type: Boolean, default: false},
     'imgIfFeaturedProduct': {
         type: String
+    },
+    'detailInfoUrlIfFeaturedProduct': {
+        type: String,
+        validate: {
+            validator: validateLink,
+            message: "Please provide valid detail info url."
+        }
     },
     'images': {
         type: [String],
@@ -50,10 +62,10 @@ var portfolioSchema = new Schema({
             message: "Please provide valid white papers Urls."
         }
     },
-    'demoLinks': {
-        type: [String],
+    'demoUrl': {
+        type: String,
         validate: {
-            validator: validateUrl,
+            validator: validateLink,
             message: "Please provide valid demo links."
         }
     },
@@ -81,7 +93,6 @@ portfolioSchema.pre('save', function (next) {
 
     next();
 });
-
 
 var Portfolio = mongoose.model('Portfolio', portfolioSchema);
 

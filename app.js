@@ -37,6 +37,7 @@ var groupsRoute = require('./api/routes/groupsRoutes');
 var categoryRoute = require('./api/routes/categoryRoutes');
 var userRoute = require('./api/routes/userRoutes');
 var testimonialRoute = require('./api/routes/testimonialRoutes');
+var subCategoryRoute = require('./api/routes/subCategoryRoutes');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -50,7 +51,7 @@ app.use(morgan('dev'));
 //CORS handling
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
-    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Cache-Control ,Origin,Accept," +
         " X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
@@ -64,7 +65,7 @@ app.use('/category', categoryRoute);
 app.use('/portfolio', portfolioRoute);
 app.use('/upload', uploadRoute);
 app.use('/testimonial', testimonialRoute);
-
+app.use('/subCategory', subCategoryRoute);
 
 //to handle user requested path other that defined api path
 app.use('/', function (req, res, next) {

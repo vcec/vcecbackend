@@ -77,7 +77,7 @@ router.post('/uploadImage', function (request, response) {
         }
         response.status(200).json({
             data: {
-                urlPath: "localhost:3000/images/" + request.files[0].filename
+                urlPath: "images/" + request.files[0].filename
             }
         });
     });
@@ -95,7 +95,7 @@ router.post('/uploadVideo', function (request, response) {
         }
         response.status(200).json({
             data: {
-                urlPath: "localhost:3000/videos/" + request.files[0].filename
+                urlPath: "videos/" + request.files[0].filename
             }
         });
     });
@@ -112,7 +112,7 @@ router.post('/uploadPdf', function (request, response) {
         }
         response.status(200).json({
             data: {
-                urlPath: "localhost:3000/pdf/" + request.files[0].filename
+                urlPath: "pdf/" + request.files[0].filename
             }
         });
     });
