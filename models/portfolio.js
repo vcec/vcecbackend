@@ -14,6 +14,7 @@ function validateLink(link) {
     return /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[A-Za-z0-9]+([\-\.]{1}[A-Za-z0-9]+)*\.[A-Za-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/gi.test(link);
 }
 
+
 //schema for portfolios
 var portfolioSchema = new Schema({
     'title': {type: String, required: true, unique: true},
@@ -21,8 +22,60 @@ var portfolioSchema = new Schema({
     'productGroups': {type: [String], required: true},
     'solutions': {type: [String], required: true},
     'subSolutions': {type: [String]},
+    'articles': [{
+        heading: {
+            type: String,
+            required: [true, 'Please provide heading for article']
+        },
+        img: {
+            type: String
+        },
+        seeMoreLink: {
+            type: String
+        },
+        type: {
+            type: String
+        },
+        desc: {
+            type: String
+        }
+    }],
+    'others': [{
+        heading: {
+            type: String,
+            required: [true, 'Please provide heading for data']
+        },
+        img: {
+            type: String
+        },
+        seeMoreLink: {
+            type: String
+        },
+        type: {
+            type: String
+        },
+        desc: {
+            type: String
+        }
+    }],
     'desc': {type: String, required: true},
     'isItFeaturedProduct': {type: Boolean, default: false},
+    'mainVideo': {
+        title: {
+            type: String
+        },
+        url: {
+            type: String
+        }
+    },
+    'coverImage': {
+        title: {
+            type: String
+        },
+        url: {
+            type: String
+        }
+    },
     'imgIfFeaturedProduct': {
         type: String
     },
@@ -33,42 +86,53 @@ var portfolioSchema = new Schema({
             message: "Please provide valid detail info url."
         }
     },
-    'images': {
-        type: [String],
-        required: true,
-        validate: {
-            validator: validateUrl,
-            message: "Please provide valid Image Urls."
+    'videos': [{
+        title: {
+            type: String,
+            required: [true, 'Video Title is required.']
+        },
+        url: {
+            type: String
         }
-    },
-    'videos': {
-        type: [String], required: true,
-        validate: {
-            validator: validateUrl,
-            message: "Please provide valid video Urls."
+    }],
+    'caseStudies': [
+        {
+            title: {
+                type: String,
+                required: [true, 'Case study Title is required.']
+            },
+            url: {
+                type: String
+            }
         }
-    },
-    'caseStudies': {
-        type: [String],
-        validate: {
-            validator: validateUrl,
-            message: "Please provide valid case studies Urls."
+    ],
+    'whitePapers': [{
+        title: {
+            type: String,
+            required: [true, 'White paper Title is required.']
+        },
+        url: {
+            type: String
         }
-    },
-    'whitePapers': {
-        type: [String],
-        validate: {
-            validator: validateUrl,
-            message: "Please provide valid white papers Urls."
+    }],
+    'demos': [{
+        heading: {
+            type: String,
+            required: [true, 'Please provide heading for demo']
+        },
+        img: {
+            type: String
+        },
+        seeMoreLink: {
+            type: String
+        },
+        type: {
+            type: String
+        },
+        desc: {
+            type: String
         }
-    },
-    'demoUrl': {
-        type: String,
-        validate: {
-            validator: validateLink,
-            message: "Please provide valid demo links."
-        }
-    },
+    }],
     created_at: Number,
     updated_at: Number
 });

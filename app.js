@@ -38,6 +38,7 @@ var categoryRoute = require('./api/routes/categoryRoutes');
 var userRoute = require('./api/routes/userRoutes');
 var testimonialRoute = require('./api/routes/testimonialRoutes');
 var subCategoryRoute = require('./api/routes/subCategoryRoutes');
+var articleRoute = require('./api/routes/articleRoutes');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
@@ -66,6 +67,7 @@ app.use('/portfolio', portfolioRoute);
 app.use('/upload', uploadRoute);
 app.use('/testimonial', testimonialRoute);
 app.use('/subCategory', subCategoryRoute);
+app.use('/article', articleRoute);
 
 //to handle user requested path other that defined api path
 app.use('/', function (req, res, next) {

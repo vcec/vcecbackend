@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var autoIncrement = require('mongoose-auto-increment');
 
-
 //schema for categories
 var productSubCategorySchema = new Schema({
     'name': {type: String, required: [true, "Sub Category name is required."], unique: true},
