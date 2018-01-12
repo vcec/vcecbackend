@@ -63,6 +63,29 @@ router.get('/:groupId', function (req, res, next) {
         });
 });
 
+//get group by id
+router.get('/groupName/:groupName', function (req, res, next) {
+    Group.findOne({"group_name": req.params.groupName})
+        .exec()
+        .then(function (group) {
+            if (!group) {
+                res.status(404).jsonp({
+                    "message": "Not found"
+                });
+            } else {
+                res.status(200).jsonp({
+                    data: group
+                });
+            }
+        })
+        .catch(function (err) {
+            res.status(500).json({
+                error: err.message
+            })
+        });
+});
+
+
 //update group
 router.patch('/:groupId', function (req, res, next) {
     Group.findOneAndUpdate({'_id': req.params.groupId}, {$set: req.body})

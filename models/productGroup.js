@@ -2,11 +2,12 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var autoIncrement = require('mongoose-auto-increment');
 
-
 //Schema for products Group
 var productGroupSchema = new Schema({
     'group_name': {type: String, required: [true, 'Group name is required.'], unique: true},
     'img': {type: String, required: [true, 'Image is required.']},
+    'coverImage': {type: String, required: [true, 'Cover image is required.']},
+    'desc': {type: String, required: [true, 'Description is required.']},
     created_at: Number,
     updated_at: Number
 });

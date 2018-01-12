@@ -73,7 +73,8 @@ var portfolioSchema = new Schema({
             type: String
         },
         url: {
-            type: String
+            type: String,
+            required: [true, 'Please upload cover image its mandatory.']
         }
     },
     'imgIfFeaturedProduct': {
@@ -89,9 +90,13 @@ var portfolioSchema = new Schema({
     'videos': [{
         title: {
             type: String,
-            required: [true, 'Video Title is required.']
+            required: [true, 'Video Title is required.'],
         },
         url: {
+            type: String
+        },
+        coverImage: {
+            required: [true, 'Cover image is required.'],
             type: String
         }
     }],

@@ -63,6 +63,54 @@ router.get('/:portfolioId', function (req, res, next) {
         });
 });
 
+//get portfolios by product Group
+router.get('/group/:groupName', function (req, res, next) {
+    var grourpName = req.params.groupName;
+    console.log(grourpName);
+    Portfolio.find({productGroups: grourpName})
+        .exec()
+        .then(function (portfolios) {
+            if (!portfolios || portfolios.length == 0) {
+                res.status(404).jsonp({
+                    "message": "Not found"
+                });
+            } else {
+                res.status(200).jsonp({
+                    data: portfolios
+                });
+            }
+        })
+        .catch(function (err) {
+            res.status(500).json({
+                error: err.message
+            })
+        });
+});
+
+//get portfolios by category
+router.get('/category/:categoryName', function (req, res, next) {
+    var grourpName = req.params.categoryName;
+    Portfolio.find({solutions: categoryName})
+        .exec()
+        .then(function (portfolios) {
+            if (!portfolios || portfolios.length == 0) {
+                res.status(404).jsonp({
+                    "message": "Not found"
+                });
+            } else {
+                res.status(200).jsonp({
+                    data: portfolios
+                });
+            }
+        })
+        .catch(function (err) {
+            res.status(500).json({
+                error: err.message
+            })
+        });
+});
+
+
 //update portfolio
 router.patch('/:portfolioId', function (req, res, next) {
     Portfolio.findOneAndUpdate({'_id': req.params.portfolioId}, {$set: req.body})
