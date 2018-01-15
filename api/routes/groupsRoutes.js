@@ -2,9 +2,11 @@ var express = require('express');
 var router = express.Router();
 var Group = require('../../models/productGroup');
 var multer = require('multer');
+var verifyToken = require('../../auth/verifyToken');
+
 
 // save group
-router.post('/', function (req, res, next) {
+router.post('/', verifyToken, function (req, res, next) {
     var group = new Group(req.body);
     group.save()
         .then(function (newGroup) {
@@ -26,7 +28,7 @@ router.post('/', function (req, res, next) {
 });
 
 // get all groups
-router.get('/', function (req, res, next) {
+router.get('/', verifyToken, function (req, res, next) {
     Group.find({})
         .exec()
         .then(function (groups) {
@@ -42,7 +44,7 @@ router.get('/', function (req, res, next) {
 });
 
 //get group by id
-router.get('/:groupId', function (req, res, next) {
+router.get('/:groupId', verifyToken, function (req, res, next) {
     Group.findById(req.params.groupId)
         .exec()
         .then(function (group) {
@@ -64,7 +66,7 @@ router.get('/:groupId', function (req, res, next) {
 });
 
 //get group by id
-router.get('/groupName/:groupName', function (req, res, next) {
+router.get('/groupName/:groupName', verifyToken, function (req, res, next) {
     Group.findOne({"group_name": req.params.groupName})
         .exec()
         .then(function (group) {
@@ -87,7 +89,7 @@ router.get('/groupName/:groupName', function (req, res, next) {
 
 
 //update group
-router.patch('/:groupId', function (req, res, next) {
+router.patch('/:groupId', verifyToken, function (req, res, next) {
     Group.findOneAndUpdate({'_id': req.params.groupId}, {$set: req.body})
         .exec()
         .then(function (response) {
@@ -104,7 +106,7 @@ router.patch('/:groupId', function (req, res, next) {
 });
 
 //delete group
-router.delete('/:groupId', function (req, res, next) {
+router.delete('/:groupId', verifyToken, function (req, res, next) {
     Group.findByIdAndRemove(req.params.groupId)
         .exec()
         .then(function (response) {

@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var Testimonial = require('../../models/testimonial');
+var verifyToken = require('../../auth/verifyToken');
+
 
 // save testimonial
-router.post('/', function (req, res, next) {
+router.post('/', verifyToken, function (req, res, next) {
     var testimonial = new Testimonial(req.body);
     testimonial.save()
         .then(function (newTestimonial) {
@@ -19,7 +21,7 @@ router.post('/', function (req, res, next) {
 });
 
 // get all categories
-router.get('/', function (req, res, next) {
+router.get('/', verifyToken, function (req, res, next) {
     Testimonial.find({})
         .exec()
         .then(function (testimonials) {
@@ -35,7 +37,7 @@ router.get('/', function (req, res, next) {
 });
 
 //get categories by id
-router.get('/:testimonialId', function (req, res, next) {
+router.get('/:testimonialId', verifyToken, function (req, res, next) {
     Testimonial.findById(req.params.testimonialId)
         .exec()
         .then(function (testimonial) {
@@ -57,7 +59,7 @@ router.get('/:testimonialId', function (req, res, next) {
 });
 
 //update categories
-router.patch('/:testimonialId', function (req, res, next) {
+router.patch('/:testimonialId', verifyToken, function (req, res, next) {
     Testimonial.findOneAndUpdate({'_id': req.params.testimonialId}, {$set: req.body})
         .exec()
         .then(function (response) {
@@ -74,7 +76,7 @@ router.patch('/:testimonialId', function (req, res, next) {
 });
 
 //delete categories
-router.delete('/:testimonialId', function (req, res, next) {
+router.delete('/:testimonialId', verifyToken, function (req, res, next) {
     Testimonial.findByIdAndRemove(req.params.testimonialId)
         .exec()
         .then(function (response) {

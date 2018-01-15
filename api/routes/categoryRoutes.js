@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var Category = require('../../models/categories');
+var verifyToken = require('../../auth/verifyToken');
+
 
 // save categories
-router.post('/', function (req, res, next) {
+router.post('/', verifyToken, function (req, res, next) {
     var category = new Category(req.body);
     category.save()
         .then(function (newCategory) {
@@ -25,7 +27,7 @@ router.post('/', function (req, res, next) {
 });
 
 // get all categories
-router.get('/', function (req, res, next) {
+router.get('/', verifyToken, function (req, res, next) {
     Category.find({})
         .exec()
         .then(function (categories) {
@@ -41,7 +43,7 @@ router.get('/', function (req, res, next) {
 });
 
 //get categories by id
-router.get('/:categoryId', function (req, res, next) {
+router.get('/:categoryId', verifyToken, function (req, res, next) {
     Category.findById(req.params.categoryId)
         .exec()
         .then(function (category) {
@@ -62,8 +64,31 @@ router.get('/:categoryId', function (req, res, next) {
         });
 });
 
+//get categories by catName
+router.get('/categoryName/:catName', verifyToken, function (req, res, next) {
+    Category.findOne({'category_name': req.params.catName})
+        .exec()
+        .then(function (category) {
+            if (!category) {
+                res.status(404).jsonp({
+                    "message": "Not found"
+                });
+            } else {
+                res.status(200).jsonp({
+                    data: category
+                });
+            }
+        })
+        .catch(function (err) {
+            res.status(500).json({
+                error: err.message
+            })
+        });
+});
+
+
 //update categories
-router.patch('/:categoryId', function (req, res, next) {
+router.patch('/:categoryId', verifyToken, function (req, res, next) {
     Category.findOneAndUpdate({'_id': req.params.categoryId}, {$set: req.body})
         .exec()
         .then(function (response) {
@@ -80,7 +105,7 @@ router.patch('/:categoryId', function (req, res, next) {
 });
 
 //delete categories
-router.delete('/:categoryId', function (req, res, next) {
+router.delete('/:categoryId', verifyToken, function (req, res, next) {
     Category.findByIdAndRemove(req.params.categoryId)
         .exec()
         .then(function (response) {

@@ -1,6 +1,7 @@
 var express = require('express');
 var multer = require('multer');
 var router = express.Router();
+var verifyToken = require('../../auth/verifyToken');
 
 var storageForImage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -67,7 +68,7 @@ var uploadVideoFile = videoUploader.any();
 var uploadPdfFile = pdfUploader.any();
 
 //api to create groups
-router.post('/uploadImage', function (request, response) {
+router.post('/uploadImage', verifyToken, function (request, response) {
     uploadImageFile(request, response, function (err) {
         if (err) {
             // An error occurred when uploading
@@ -85,7 +86,7 @@ router.post('/uploadImage', function (request, response) {
 
 
 //api to video type
-router.post('/uploadVideo', function (request, response) {
+router.post('/uploadVideo', verifyToken, function (request, response) {
     uploadVideoFile(request, response, function (err) {
         if (err) {
             // An error occurred when uploading
@@ -102,7 +103,7 @@ router.post('/uploadVideo', function (request, response) {
 });
 
 //api to pdf type
-router.post('/uploadPdf', function (request, response) {
+router.post('/uploadPdf', verifyToken, function (request, response) {
     uploadPdfFile(request, response, function (err) {
         if (err) {
             // An error occurred when uploading

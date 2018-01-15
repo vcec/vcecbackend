@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var SubCategory = require('../../models/subCategories');
+var verifyToken = require('../../auth/verifyToken');
+
 
 // save categories
-router.post('/', function (req, res, next) {
+router.post('/', verifyToken, function (req, res, next) {
     var subCategory = new SubCategory(req.body);
     subCategory.save()
         .then(function (newCategory) {
@@ -25,7 +27,7 @@ router.post('/', function (req, res, next) {
 });
 
 // get all categories
-router.get('/', function (req, res, next) {
+router.get('/', verifyToken, function (req, res, next) {
     SubCategory.find({})
         .exec()
         .then(function (categories) {
@@ -41,7 +43,7 @@ router.get('/', function (req, res, next) {
 });
 
 //get categories by id
-router.get('/:categoryId', function (req, res, next) {
+router.get('/:categoryId', verifyToken, function (req, res, next) {
     SubCategory.findById(req.params.categoryId)
         .exec()
         .then(function (category) {
@@ -63,7 +65,7 @@ router.get('/:categoryId', function (req, res, next) {
 });
 
 //get all categories by main category id
-router.get('/mainCategory/:mainCategoryId', function (req, res, next) {
+router.get('/mainCategory/:mainCategoryId', verifyToken, function (req, res, next) {
     SubCategory.find({"mainCategory": req.params.mainCategoryId})
         .exec()
         .then(function (categories) {
@@ -85,7 +87,7 @@ router.get('/mainCategory/:mainCategoryId', function (req, res, next) {
 });
 
 //update categories
-router.patch('/:categoryId', function (req, res, next) {
+router.patch('/:categoryId', verifyToken, function (req, res, next) {
     SubCategory.findOneAndUpdate({'_id': req.params.categoryId}, {$set: req.body})
         .exec()
         .then(function (response) {
@@ -102,7 +104,7 @@ router.patch('/:categoryId', function (req, res, next) {
 });
 
 //delete categories
-router.delete('/:categoryId', function (req, res, next) {
+router.delete('/:categoryId', verifyToken, function (req, res, next) {
     SubCategory.findByIdAndRemove(req.params.categoryId)
         .exec()
         .then(function (response) {

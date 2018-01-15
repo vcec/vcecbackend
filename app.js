@@ -3,9 +3,9 @@ var app = express();
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
+var autoIncrement = require('mongoose-auto-increment');
 
 mongoose.connect('mongodb://127.0.0.1:27017/vcec', {useMongoClient: true});
-var autoIncrement = require('mongoose-auto-increment');
 var fs = require('fs');
 
 //create uploads folder
@@ -32,10 +32,10 @@ mongoose.connection.once('open', function () {
 
 autoIncrement.initialize(mongoose.connection);
 
+var authController = require('./auth/AuthController');
 var portfolioRoute = require('./api/routes/portfolioRoutes');
 var groupsRoute = require('./api/routes/groupsRoutes');
 var categoryRoute = require('./api/routes/categoryRoutes');
-var userRoute = require('./api/routes/userRoutes');
 var testimonialRoute = require('./api/routes/testimonialRoutes');
 var subCategoryRoute = require('./api/routes/subCategoryRoutes');
 var articleRoute = require('./api/routes/articleRoutes');
@@ -51,16 +51,22 @@ app.use(morgan('dev'));
 
 //CORS handling
 app.use(function (req, res, next) {
+    /*  var auth = req.headers['authorization'];  // auth is in base64(username:password)  so we need to decode the base64
+      if (auth) {*/
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,PATCH');
     res.header('Access-Control-Allow-Headers', 'Content-Type');
     res.header("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Cache-Control ,Origin,Accept," +
-        " X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization");
+        " X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, Authorization,x-access-token");
     next();
+    /*  } else {
+          var error = new Error('Unauthorized access!');
+          error.status = 401;
+          next(error);
+      }*/
 });
 
 //redirect request to specific router
-app.use('/user', userRoute);
 app.use('/group', groupsRoute);
 app.use('/category', categoryRoute);
 app.use('/portfolio', portfolioRoute);
@@ -68,6 +74,7 @@ app.use('/upload', uploadRoute);
 app.use('/testimonial', testimonialRoute);
 app.use('/subCategory', subCategoryRoute);
 app.use('/article', articleRoute);
+app.use('/api/auth', authController);
 
 //to handle user requested path other that defined api path
 app.use('/', function (req, res, next) {
@@ -78,7 +85,6 @@ app.use('/', function (req, res, next) {
 
 //middleware to handle error thrown from anywhere(500 db errors)
 app.use(function (error, req, res, next) {
-    console.log('*******');
     res.status(error.status || 500).json({
         error: {
             message: error.message
