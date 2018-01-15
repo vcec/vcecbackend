@@ -21,7 +21,7 @@ router.post('/', verifyToken, function (req, res, next) {
 });
 
 // get all categories
-router.get('/', verifyToken, function (req, res, next) {
+router.get('/', function (req, res, next) {
     Testimonial.find({})
         .exec()
         .then(function (testimonials) {
@@ -37,7 +37,7 @@ router.get('/', verifyToken, function (req, res, next) {
 });
 
 //get categories by id
-router.get('/:testimonialId', verifyToken, function (req, res, next) {
+router.get('/:testimonialId', function (req, res, next) {
     Testimonial.findById(req.params.testimonialId)
         .exec()
         .then(function (testimonial) {

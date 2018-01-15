@@ -27,7 +27,7 @@ router.post('/', verifyToken, function (req, res, next) {
 });
 
 // get all categories
-router.get('/', verifyToken, function (req, res, next) {
+router.get('/', function (req, res, next) {
     Category.find({})
         .exec()
         .then(function (categories) {
@@ -43,7 +43,7 @@ router.get('/', verifyToken, function (req, res, next) {
 });
 
 //get categories by id
-router.get('/:categoryId', verifyToken, function (req, res, next) {
+router.get('/:categoryId', function (req, res, next) {
     Category.findById(req.params.categoryId)
         .exec()
         .then(function (category) {
@@ -65,7 +65,7 @@ router.get('/:categoryId', verifyToken, function (req, res, next) {
 });
 
 //get categories by catName
-router.get('/categoryName/:catName', verifyToken, function (req, res, next) {
+router.get('/categoryName/:catName', function (req, res, next) {
     Category.findOne({'category_name': req.params.catName})
         .exec()
         .then(function (category) {

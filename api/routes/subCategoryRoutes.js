@@ -27,7 +27,7 @@ router.post('/', verifyToken, function (req, res, next) {
 });
 
 // get all categories
-router.get('/', verifyToken, function (req, res, next) {
+router.get('/', function (req, res, next) {
     SubCategory.find({})
         .exec()
         .then(function (categories) {
@@ -43,7 +43,7 @@ router.get('/', verifyToken, function (req, res, next) {
 });
 
 //get categories by id
-router.get('/:categoryId', verifyToken, function (req, res, next) {
+router.get('/:categoryId', function (req, res, next) {
     SubCategory.findById(req.params.categoryId)
         .exec()
         .then(function (category) {
@@ -65,7 +65,7 @@ router.get('/:categoryId', verifyToken, function (req, res, next) {
 });
 
 //get all categories by main category id
-router.get('/mainCategory/:mainCategoryId', verifyToken, function (req, res, next) {
+router.get('/mainCategory/:mainCategoryId', function (req, res, next) {
     SubCategory.find({"mainCategory": req.params.mainCategoryId})
         .exec()
         .then(function (categories) {

@@ -28,7 +28,7 @@ router.post('/', verifyToken, function (req, res, next) {
 });
 
 // get all groups
-router.get('/', verifyToken, function (req, res, next) {
+router.get('/', function (req, res, next) {
     Group.find({})
         .exec()
         .then(function (groups) {
@@ -44,7 +44,7 @@ router.get('/', verifyToken, function (req, res, next) {
 });
 
 //get group by id
-router.get('/:groupId', verifyToken, function (req, res, next) {
+router.get('/:groupId', function (req, res, next) {
     Group.findById(req.params.groupId)
         .exec()
         .then(function (group) {
@@ -66,7 +66,7 @@ router.get('/:groupId', verifyToken, function (req, res, next) {
 });
 
 //get group by id
-router.get('/groupName/:groupName', verifyToken, function (req, res, next) {
+router.get('/groupName/:groupName', function (req, res, next) {
     Group.findOne({"group_name": req.params.groupName})
         .exec()
         .then(function (group) {

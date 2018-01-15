@@ -27,7 +27,7 @@ router.post('/', verifyToken, function (req, res, next) {
 });
 
 // get all portfolios
-router.get('/', verifyToken, function (req, res, next) {
+router.get('/', function (req, res, next) {
     Portfolio.find()
         .exec()
         .then(function (portfolios) {
@@ -44,7 +44,7 @@ router.get('/', verifyToken, function (req, res, next) {
 });
 
 //get portfolio by id
-router.get('/:portfolioId', verifyToken, function (req, res, next) {
+router.get('/:portfolioId', function (req, res, next) {
     Portfolio.findById(req.params.portfolioId)
         .exec()
         .then(function (portfolio) {
@@ -66,7 +66,7 @@ router.get('/:portfolioId', verifyToken, function (req, res, next) {
 });
 
 //get portfolios by product Group
-router.get('/group/:groupName', verifyToken, function (req, res, next) {
+router.get('/group/:groupName', function (req, res, next) {
     var grourpName = req.params.groupName;
     console.log(grourpName);
     Portfolio.find({productGroups: grourpName})
@@ -90,7 +90,7 @@ router.get('/group/:groupName', verifyToken, function (req, res, next) {
 });
 
 //get portfolios by category
-router.get('/category/:categoryName', verifyToken, function (req, res, next) {
+router.get('/category/:categoryName', function (req, res, next) {
     var categoryName = req.params.categoryName;
     Portfolio.find({solutions: categoryName})
         .exec()
