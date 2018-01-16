@@ -18,6 +18,7 @@ var testimonialSchema = new Schema({
         }
     },
     'mainText': {type: String, required: [true, "text is required."]},
+    'addedBy': {type: String},
     created_at: Number,
     updated_at: Number
 });

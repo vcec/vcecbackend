@@ -6,6 +6,7 @@ var autoIncrement = require('mongoose-auto-increment');
 var productSubCategorySchema = new Schema({
     'name': {type: String, required: [true, "Sub Category name is required."], unique: true},
     'img': {type: String},
+    'addedBy': {type: String},
     'mainCategory': {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'ProductCategory',

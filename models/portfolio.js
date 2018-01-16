@@ -22,6 +22,7 @@ var portfolioSchema = new Schema({
     'productGroups': {type: [String], required: true},
     'solutions': {type: [String], required: true},
     'subSolutions': {type: [String]},
+    'addedBy': {type: String},
     'articles': [{
         heading: {
             type: String,
