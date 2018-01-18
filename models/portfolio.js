@@ -67,6 +67,9 @@ var portfolioSchema = new Schema({
         },
         url: {
             type: String
+        },
+        coverImage: {
+            type: String
         }
     },
     'coverImage': {

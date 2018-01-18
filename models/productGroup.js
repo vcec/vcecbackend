@@ -6,6 +6,7 @@ var autoIncrement = require('mongoose-auto-increment');
 var productGroupSchema = new Schema({
     'group_name': {type: String, required: [true, 'Group name is required.'], unique: true},
     'img': {type: String, required: [true, 'Image is required.']},
+    'alternativeImage': {type: String, required: [true, 'Alternative Image is required.']},
     'coverImage': {type: String, required: [true, 'Cover image is required.']},
     'desc': {type: String, required: [true, 'Description is required.']},
     'addedBy': {type: String},
