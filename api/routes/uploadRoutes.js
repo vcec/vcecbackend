@@ -8,7 +8,8 @@ var storageForImage = multer.diskStorage({
         cb(null, 'uploads/images');
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname);
+        var date = new Date();
+        cb(null, 'image' + '_' + date.getTime());
     }
 });
 
@@ -17,7 +18,8 @@ var storageForVideos = multer.diskStorage({
         cb(null, 'uploads/videos')
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname)
+        var date = new Date();
+        cb(null, 'video' + '_' + date.getTime())
     }
 });
 
@@ -26,7 +28,8 @@ var storageForPdf = multer.diskStorage({
         cb(null, 'uploads/pdf')
     },
     filename: function (req, file, cb) {
-        cb(null, file.originalname)
+        var date = new Date();
+        cb(null, 'pdf' + '_' + date.getTime())
     }
 });
 
