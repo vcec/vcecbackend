@@ -8,6 +8,7 @@ var productCategorySchema = new Schema({
     'category_name': {type: String, required: [true, "Category name is required."], unique: true},
     'img': {type: String, required: [true, 'Image is required.']},
     'coverImage': {type: String, required: [true, 'Image is required.']},
+    'alternativeImage': {type: String, required: [true, 'Alternative Image is required.']},
     'desc': {type: String, required: [true, 'Description is required for category']},
     'addedBy': {type: String},
     created_at: Number,
