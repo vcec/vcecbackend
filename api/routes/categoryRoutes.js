@@ -47,15 +47,9 @@ router.get('/:categoryId', function (req, res, next) {
     Category.findById(req.params.categoryId)
         .exec()
         .then(function (category) {
-            if (!category) {
-                res.status(404).jsonp({
-                    "message": "Not found"
-                });
-            } else {
-                res.status(200).jsonp({
-                    data: category
-                });
-            }
+            res.status(200).jsonp({
+                data: category
+            });
         })
         .catch(function (err) {
             res.status(500).json({
@@ -69,15 +63,9 @@ router.get('/categoryName/:catName', function (req, res, next) {
     Category.findOne({'category_name': req.params.catName})
         .exec()
         .then(function (category) {
-            if (!category) {
-                res.status(404).jsonp({
-                    "message": "Not found"
-                });
-            } else {
-                res.status(200).jsonp({
-                    data: category
-                });
-            }
+            res.status(200).jsonp({
+                data: category
+            });
         })
         .catch(function (err) {
             res.status(500).json({

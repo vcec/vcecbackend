@@ -48,15 +48,11 @@ router.get('/:portfolioId', function (req, res, next) {
     Portfolio.findById(req.params.portfolioId)
         .exec()
         .then(function (portfolio) {
-            if (!portfolio || portfolio.length == 0) {
-                res.status(404).jsonp({
-                    "message": "Not found"
-                });
-            } else {
-                res.status(200).jsonp({
-                    data: portfolio
-                });
-            }
+
+            res.status(200).jsonp({
+                data: portfolio
+            });
+
         })
         .catch(function (err) {
             res.status(500).json({
@@ -72,15 +68,11 @@ router.get('/group/:groupName', function (req, res, next) {
     Portfolio.find({productGroups: grourpName})
         .exec()
         .then(function (portfolios) {
-            if (!portfolios || portfolios.length == 0) {
-                res.status(404).jsonp({
-                    "message": "Not found"
-                });
-            } else {
-                res.status(200).jsonp({
-                    data: portfolios
-                });
-            }
+
+            res.status(200).jsonp({
+                data: portfolios
+            });
+
         })
         .catch(function (err) {
             res.status(500).json({
@@ -95,15 +87,11 @@ router.get('/category/:categoryName', function (req, res, next) {
     Portfolio.find({solutions: categoryName})
         .exec()
         .then(function (portfolios) {
-            if (!portfolios || portfolios.length == 0) {
-                res.status(404).jsonp({
-                    "message": "Not found"
-                });
-            } else {
-                res.status(200).jsonp({
-                    data: portfolios
-                });
-            }
+
+            res.status(200).jsonp({
+                data: portfolios
+            });
+
         })
         .catch(function (err) {
             res.status(500).json({

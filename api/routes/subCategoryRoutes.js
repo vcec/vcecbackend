@@ -47,15 +47,9 @@ router.get('/:categoryId', function (req, res, next) {
     SubCategory.findById(req.params.categoryId)
         .exec()
         .then(function (category) {
-            if (!category) {
-                res.status(404).jsonp({
-                    "message": "Not found"
-                });
-            } else {
-                res.status(200).jsonp({
-                    data: category
-                });
-            }
+            res.status(200).jsonp({
+                data: category
+            });
         })
         .catch(function (err) {
             res.status(500).json({
@@ -69,15 +63,9 @@ router.get('/mainCategory/:mainCategoryId', function (req, res, next) {
     SubCategory.find({"mainCategory": req.params.mainCategoryId})
         .exec()
         .then(function (categories) {
-            if (!categories || categories.length == 0) {
-                res.status(404).jsonp({
-                    "message": "Not found"
-                });
-            } else {
-                res.status(200).jsonp({
-                    data: categories
-                });
-            }
+            res.status(200).jsonp({
+                data: categories
+            });
         })
         .catch(function (err) {
             res.status(500).json({

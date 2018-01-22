@@ -41,15 +41,9 @@ router.get('/:testimonialId', function (req, res, next) {
     Testimonial.findById(req.params.testimonialId)
         .exec()
         .then(function (testimonial) {
-            if (!testimonial) {
-                res.status(404).jsonp({
-                    "message": "Not found"
-                });
-            } else {
-                res.status(200).jsonp({
-                    data: testimonial
-                });
-            }
+            res.status(200).jsonp({
+                data: testimonial
+            });
         })
         .catch(function (err) {
             res.status(500).json({
