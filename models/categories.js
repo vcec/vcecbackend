@@ -9,6 +9,8 @@ var productCategorySchema = new Schema({
     'coverImage': {type: String, required: [true, 'Image is required.']},
     'alternativeImage': {type: String, required: [true, 'Alternative Image is required.']},
     'desc': {type: String, required: [true, 'Description is required for category']},
+    'shortDesc': {type: String, required: [true, 'Short Description is required.']},
+    'heading': {type: String, required: [true, 'Heading is required.']},
     'addedBy': {type: String},
     created_at: Number,
     updated_at: Number
