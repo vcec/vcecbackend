@@ -16,7 +16,7 @@ router.post('/', verifyToken, function (req, res, next) {
         .catch(function (err) {
             if (err.message.indexOf('duplicate key') != -1) {
                 res.status(500).json({
-                    error: err.message
+                    message: "Subcategory with same name already exist."
                 })
             } else {
                 res.status(500).json({
@@ -37,7 +37,7 @@ router.get('/', function (req, res, next) {
             })
         }).catch(function (err) {
         res.status(500).json({
-            error: err.message
+            message: err.message
         })
     });
 });
@@ -53,7 +53,7 @@ router.get('/:categoryId', function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         });
 });
@@ -69,7 +69,7 @@ router.get('/mainCategory/:mainCategoryId', function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         });
 });
@@ -86,7 +86,7 @@ router.patch('/:categoryId', verifyToken, function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         })
 });
@@ -102,7 +102,7 @@ router.delete('/:categoryId', verifyToken, function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         })
 });

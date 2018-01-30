@@ -31,7 +31,7 @@ router.get('/', function (req, res, next) {
             })
         }).catch(function (err) {
         res.status(500).json({
-            error: err.message
+            message: err.message
         })
     });
 });
@@ -47,7 +47,7 @@ router.get('/:testimonialId', function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         });
 });
@@ -64,7 +64,7 @@ router.patch('/:testimonialId', verifyToken, function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         })
 });
@@ -80,7 +80,7 @@ router.delete('/:testimonialId', verifyToken, function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         })
 });

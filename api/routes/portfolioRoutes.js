@@ -16,7 +16,7 @@ router.post('/', verifyToken, function (req, res, next) {
         .catch(function (err) {
             if (err.message.indexOf('duplicate key') != -1) {
                 res.status(500).json({
-                    error: err.message
+                    message: "Portfolio with same name already exist."
                 })
             } else {
                 res.status(500).json({
@@ -38,7 +38,7 @@ router.get('/', function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             });
         });
 });
@@ -56,7 +56,7 @@ router.get('/:portfolioId', function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         });
 });
@@ -76,7 +76,7 @@ router.get('/group/:groupName', function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         });
 });
@@ -95,7 +95,7 @@ router.get('/category/:categoryName', function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         });
 });
@@ -113,7 +113,7 @@ router.patch('/:portfolioId', verifyToken, function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         })
 });
@@ -129,7 +129,7 @@ router.delete('/:portfolioId', verifyToken, function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         })
 });

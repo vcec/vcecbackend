@@ -17,7 +17,7 @@ router.post('/', verifyToken, function (req, res, next) {
         .catch(function (err) {
             if (err.message.indexOf('duplicate key') != -1) {
                 res.status(500).json({
-                    error: err.message
+                    message: "Group with same name already exist."
                 })
             } else {
                 res.status(500).json({
@@ -38,7 +38,7 @@ router.get('/', function (req, res, next) {
             })
         }).catch(function (err) {
         res.status(500).json({
-            error: err.message
+            message: err.message
         })
     });
 });
@@ -56,7 +56,7 @@ router.get('/:groupId', function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         });
 });
@@ -74,7 +74,7 @@ router.get('/groupName/:groupName', function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         });
 });
@@ -92,7 +92,7 @@ router.patch('/:groupId', verifyToken, function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         })
 });
@@ -108,7 +108,7 @@ router.delete('/:groupId', verifyToken, function (req, res, next) {
         })
         .catch(function (err) {
             res.status(500).json({
-                error: err.message
+                message: err.message
             })
         })
 });

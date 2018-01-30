@@ -16,7 +16,7 @@ router.post('/', verifyToken, function (req, res, next) {
         .catch(function (err) {
             if (err.message.indexOf('duplicate key') != -1) {
                 res.status(500).json({
-                    error: err.message
+                    message: "Category with same name already exist."
                 })
             } else {
                 res.status(500).json({
