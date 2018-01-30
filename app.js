@@ -35,7 +35,7 @@ mongoose.connection.once('open', function () {
 
 autoIncrement.initialize(mongoose.connection);
 
-var authController = require('./auth/AuthController');
+var authController = require('./auth/authController');
 var portfolioRoute = require('./api/routes/portfolioRoutes');
 var groupsRoute = require('./api/routes/groupsRoutes');
 var categoryRoute = require('./api/routes/categoryRoutes');
