@@ -28,19 +28,60 @@ router.post('/', verifyToken, function (req, res, next) {
 
 // get all portfolios
 router.get('/', function (req, res, next) {
-    Portfolio.find()
-        .exec()
-        .then(function (portfolios) {
-            res.status(200).json({
-                count: portfolios.length,
-                data: portfolios
-            })
-        })
-        .catch(function (err) {
-            res.status(500).json({
-                message: err.message
-            });
+    if (req.query.page >= 0) {
+        var maxRecordInResponse = 10;
+        var skipRecords = maxRecordInResponse * req.query.page;
+        var totalPortfoliosInDb = 0;
+        Portfolio.count({}, function (err, data) {
+            if (err == null) {
+                totalPortfoliosInDb = data;
+                Portfolio.find()
+                    .skip(skipRecords)
+                    .limit(maxRecordInResponse)
+                    .exec()
+                    .then(function (portfolios) {
+                        res.status(200).json({
+                            count: portfolios.length,
+                            data: portfolios,
+                            totalRecords: totalPortfoliosInDb
+                        })
+                    })
+                    .catch(function (err) {
+                        res.status(500).json({
+                            message: err.message
+                        });
+                    });
+            } else {
+                res.status(500).json({
+                    message: err.message
+                });
+            }
         });
+    } else {
+        Portfolio.count({}, function (err, data) {
+            if (err == null) {
+                totalPortfoliosInDb = data;
+                Portfolio.find()
+                    .exec()
+                    .then(function (portfolios) {
+                        res.status(200).json({
+                            count: portfolios.length,
+                            data: portfolios,
+                            totalRecords: totalPortfoliosInDb
+                        })
+                    })
+                    .catch(function (err) {
+                        res.status(500).json({
+                            message: err.message
+                        });
+                    });
+            } else {
+                res.status(500).json({
+                    message: err.message
+                });
+            }
+        });
+    }
 });
 
 //get portfolio by id
