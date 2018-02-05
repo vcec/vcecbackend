@@ -23,7 +23,7 @@ router.post('/', verifyToken, function (req, res, next) {
 // get all categories
 router.get('/', function (req, res, next) {
     if (req.query.page >= 0) {
-        var maxRecordInResponse = 2;
+        var maxRecordInResponse = 10;
         var skipRecords = maxRecordInResponse * req.query.page;
         var totalRecordInDb = 0;
 
