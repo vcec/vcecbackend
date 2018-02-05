@@ -29,18 +29,61 @@ router.post('/', verifyToken, function (req, res, next) {
 
 // get all groups
 router.get('/', function (req, res, next) {
-    Group.find({})
-        .exec()
-        .then(function (groups) {
-            res.status(200).json({
-                count: groups.length,
-                data: groups
-            })
-        }).catch(function (err) {
-        res.status(500).json({
-            message: err.message
-        })
-    });
+    if (req.query.page >= 0) {
+        var maxRecordInResponse = 10;
+        var skipRecords = maxRecordInResponse * req.query.page;
+        var totalRecordInDb = 0;
+
+        Group.count({}, function (err, data) {
+            if (err == null) {
+                totalRecordInDb = data;
+                Group.find()
+                    .skip(skipRecords)
+                    .limit(maxRecordInResponse)
+                    .exec()
+                    .then(function (records) {
+                        res.status(200).json({
+                            count: records.length,
+                            data: records,
+                            totalRecords: totalRecordInDb
+                        })
+                    })
+                    .catch(function (err) {
+                        res.status(500).json({
+                            message: err.message
+                        });
+                    });
+            } else {
+                res.status(500).json({
+                    message: err.message
+                });
+            }
+        });
+    } else {
+        Group.count({}, function (err, data) {
+            if (err == null) {
+                totalRecordInDb = data;
+                Group.find()
+                    .exec()
+                    .then(function (records) {
+                        res.status(200).json({
+                            count: records.length,
+                            data: records,
+                            totalRecords: totalRecordInDb
+                        })
+                    })
+                    .catch(function (err) {
+                        res.status(500).json({
+                            message: err.message
+                        });
+                    });
+            } else {
+                res.status(500).json({
+                    message: err.message
+                });
+            }
+        });
+    }
 });
 
 //get group by id

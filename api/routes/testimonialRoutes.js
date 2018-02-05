@@ -22,18 +22,61 @@ router.post('/', verifyToken, function (req, res, next) {
 
 // get all categories
 router.get('/', function (req, res, next) {
-    Testimonial.find({})
-        .exec()
-        .then(function (testimonials) {
-            res.status(200).json({
-                count: testimonials.length,
-                data: testimonials
-            })
-        }).catch(function (err) {
-        res.status(500).json({
-            message: err.message
-        })
-    });
+    if (req.query.page >= 0) {
+        var maxRecordInResponse = 2;
+        var skipRecords = maxRecordInResponse * req.query.page;
+        var totalRecordInDb = 0;
+
+        Testimonial.count({}, function (err, data) {
+            if (err == null) {
+                totalRecordInDb = data;
+                Testimonial.find()
+                    .skip(skipRecords)
+                    .limit(maxRecordInResponse)
+                    .exec()
+                    .then(function (records) {
+                        res.status(200).json({
+                            count: records.length,
+                            data: records,
+                            totalRecords: totalRecordInDb
+                        })
+                    })
+                    .catch(function (err) {
+                        res.status(500).json({
+                            message: err.message
+                        });
+                    });
+            } else {
+                res.status(500).json({
+                    message: err.message
+                });
+            }
+        });
+    } else {
+        Testimonial.count({}, function (err, data) {
+            if (err == null) {
+                totalRecordInDb = data;
+                Testimonial.find()
+                    .exec()
+                    .then(function (records) {
+                        res.status(200).json({
+                            count: records.length,
+                            data: records,
+                            totalRecords: totalRecordInDb
+                        })
+                    })
+                    .catch(function (err) {
+                        res.status(500).json({
+                            message: err.message
+                        });
+                    });
+            } else {
+                res.status(500).json({
+                    message: err.message
+                });
+            }
+        });
+    }
 });
 
 //get categories by id
